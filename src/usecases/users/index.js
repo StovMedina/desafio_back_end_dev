@@ -1,6 +1,6 @@
 const Users = require("../../models/user").model;
-const { hashPassword, verifyPass } = require("../../lib/encrypt");
-const { createToken } = require("../../lib/jwt");
+const { hashPassword, confirmPassword } = require("../../lib/encrypt");
+const { checkToken } = require("../../lib/jwt");
 
 const create = async (data) => {
   const { userName, password, email } = data;
@@ -31,9 +31,9 @@ const authenticate = async (email, password) => {
   const user = await findByEmail(email);
   const hash = user.password;
 
-  const isVerified = await verifyPass(password, hash);
-  if (!isVerified) throw new Error("nel prro, escribe bien el pass");
-  return createToken({ sub: user._id });
+  const isVerified = await confirmPassword(password, hash);
+  if (!isVerified) throw new Error("Wrong password");
+  return checkToken({ sub: user._id });
 };
 
 const delUser = async (id) => await Users.findByIdAndDelete(id).exec();
