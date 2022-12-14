@@ -7,17 +7,17 @@ const routes = Router();
 routes.get("/", authHandler, async (req, res) => {
   const id = req.params.token.sub;
 
-  const { userNAme, passwordHashed, email } = await getById(id);
+  const { userName, passwordHashed, email } = await getUserById(id);
 
-  res.json({ ok: true, payload: { userNAme, passwordHashed, email } 
+  res.json({ ok: true, payload: { userName, passwordHashed, email } 
 });
 });
 
 routes.post("/", async (req, res) => {
-  const { userNAme, passwordHashed } = req.body;
+  const { userName, passwordHashed, email, } = req.body;
 
   try {
-    const payload = await create({ userNAme, passwordHashed,});
+    const payload = await create({ userName, passwordHashed, email,});
     res.json({ ok: true, payload });
   } catch (error) {
     const { message } = error;
