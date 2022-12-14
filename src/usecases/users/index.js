@@ -36,7 +36,7 @@ const authenticate = async (email, password) => {
   return createToken({ sub: user._id });
 };
 
-const del = async (id) => await Users.findByIdAndDelete(id).exec();
+const delUser = async (id) => await Users.findByIdAndDelete(id).exec();
 
 module.exports = {
   create,
@@ -45,5 +45,5 @@ module.exports = {
   updateUser,
   findByEmail,
   authenticate,
-  del,
+  delUser,
 };
