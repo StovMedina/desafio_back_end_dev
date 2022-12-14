@@ -6,7 +6,7 @@ const schema = new Schema({
   text: { type: String, required: true, trim: true },
   tags: { type: [String] },
   image: { type: String },
-  user: { type: String, require: true },
+  user: { type: mongoose.ObjectId, ref: "user" },
   comments: { type: [String] },
   date: { type: Date, require: true },
 });
