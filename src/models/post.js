@@ -4,12 +4,11 @@ const { Schema } = mongoose;
 const schema = new Schema({
   title: { type: String, required: true, trim: true },
   text: { type: String, required: true, trim: true },
-  tags: { type: String, required: true, trim: true },
-  image: {},
-  user: {},
-  comments: {},
-  date: {},
-  tags: {},
+  tags: { type: [String] },
+  image: { type: String },
+  user: { type: String, require: true },
+  comments: { type: [String] },
+  date: { type: Date, require: true },
 });
 
 const model = mongoose.model("Post", schema);
