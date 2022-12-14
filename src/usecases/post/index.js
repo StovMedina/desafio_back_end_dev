@@ -9,15 +9,12 @@ const getUserPosts = async (user) => Posts.find({ user }).exec();
 
 const getPostById = async (id) => await Posts.findById(id).exec();
 
-const updatePost = async (id, title, text, tags, image, comments, date) =>
+const updatePost = async (id, title, text, tags, image) =>
   await Posts.findByIdAndUpdate(id, {
     title,
     text,
     tags,
     image,
-    user,
-    comments,
-    date,
   }).exec();
 
 const deletePost = async (id) => await Posts.findByIdAndDelete(id).exec();
