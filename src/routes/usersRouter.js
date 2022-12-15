@@ -8,7 +8,6 @@ const {
   authenticate,
   delUser,
 } = require("../usecases/users");
-const user = require("../usecases/users");
 const { authHandler } = require("../middlewares/authHandler");
 
 const routes = Router();
@@ -47,10 +46,12 @@ routes.post("/auth", async (req, res) => {
 
 routes.put("/:id", async (req, res) => {
   const { id } = req.params;
+  console.log(id);
   const { userName, password, email } = req.body;
   try {
     const data = { userName, password, email };
     const user = await updateUser(id, data);
+    console.log(user);
     res.json({ ok: true, payload: user });
   } catch (error) {
     const { message } = error;
@@ -58,15 +59,15 @@ routes.put("/:id", async (req, res) => {
   }
 });
 
-// routes.delete("/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { userName } = await delUser(id, userName);
-//     res.json({ ok: true, payload: { id, userName } });
-//   } catch (error) {
-//     const { message } = error;
-//     res.status(400).json({ ok: false, message });
-//   }
-// });
+routes.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteUser = await delUser(id);
+    res.json({ ok: true, payload: deleteUser });
+  } catch (error) {
+    const { message } = error;
+    res.status(400).json({ ok: false, message });
+  }
+});
 
 module.exports = routes;

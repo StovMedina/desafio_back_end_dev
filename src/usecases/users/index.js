@@ -22,11 +22,13 @@ const getAllUsers = async () => {
 
 const updateUser = async (id, data) => {
   const { userName, password, email } = data;
+  const hash = await hashPassword(password);
 
-  data.userName = userName ? userName : data.userName;
-  data.password = password ? password : data.password;
-  data.email = email ? email : data.email;
-  return await Users.findByIdAndUpdate(id, data).exec();
+  return await Users.findByIdAndUpdate(
+    id,
+    { userName, password: hash, email },
+    { new: true }
+  ).exec();
 };
 
 const findByEmail = async (email) => await Users.findOne({ email });
@@ -41,8 +43,7 @@ const authenticate = async (email, password) => {
   return setUpToken({ sub: user._id });
 };
 
-const delUser = async (id, userName) =>
-  await Users.findByIdAndDelete(id, userName).exec();
+const delUser = async (id) => await Users.findByIdAndDelete(id).exec();
 
 module.exports = {
   create,
