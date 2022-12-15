@@ -17,6 +17,6 @@ const updatePost = async (id, title, text, tags, image) =>
     image,
   }).exec();
 
-const deletePost = async (id, title) => await Posts.findByIdAndDelete(id, title).exec();
+const deletePost = async (id) => await Posts.findByIdAndDelete(id).exec();
 
 module.exports = { create, getUserPosts, getPostById, updatePost, deletePost };

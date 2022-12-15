@@ -3,6 +3,8 @@ const { create, getUserPosts, getPostById, updatePost, deletePost } = require ("
 
 const routes = Router ();
 
+
+
   routes.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
@@ -12,7 +14,7 @@ const routes = Router ();
         payload: { title, text, tags, image, user, comments, date },
       });
     } catch (error) {
-      res.status(400).json({ ok: false, message: error });
+      res.status(400).json({ ok: false, message: "Something went wrong. Please try again later.", error });
     }
   });
 
@@ -52,8 +54,8 @@ const routes = Router ();
   routes.delete("/:id", async (req, res) => {
     try {
       const { id } = req.params;
-      const {title } = await deletePost (id);
-      res.json({ ok: true, payload: { id, title } });
+      const post = await deletePost (id);
+      res.json({ ok: true, payload: post });
     } catch (error) {
       const { message } = error;
       res.status(400).json({ ok: false, message });

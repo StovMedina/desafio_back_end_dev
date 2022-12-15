@@ -6,9 +6,9 @@ const schema = new Schema({
   text: { type: String, required: true, trim: true },
   tags: { type: [String] },
   image: { type: String },
-  user: { type: mongoose.ObjectId, ref: "user" },
+  user: { type: String, ref: "user" },
   comments: { type: [String] },
-  date: { type: Date, require: true },
+  date: { type: Number  , require: true },
 });
 
 const model = mongoose.model("Post", schema);
