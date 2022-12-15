@@ -19,8 +19,8 @@ app.listen(config.app.port, () => {
   console.log(`Escucha peticion HTTP en el puerto ${config.app.port}`);
   try {
     db.connect();
-    console.log("DB is working durisimo");
+    console.log("DB is working just fine");
   } catch (err) {
-    console.error("Connection fail, as you fail in love", err);
+    console.error("Connection fail", err);
   }
 });

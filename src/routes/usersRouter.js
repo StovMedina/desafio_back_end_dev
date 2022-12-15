@@ -16,9 +16,9 @@ const routes = Router();
 routes.get("/", authHandler, async (req, res) => {
   const id = req.params.token.sub;
 
-  const { userName, passwordHashed, email } = await getUserById(id);
+  const { userName, password, email } = await getUserById(id);
 
-  res.json({ ok: true, payload: { userName, passwordHashed, email } });
+  res.json({ ok: true, payload: { userName, password, email } });
 });
 
 routes.post("/", async (req, res) => {

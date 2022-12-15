@@ -8,7 +8,7 @@ const authHandler = async (req, res, next) => {
 
   try {
     const payload = checkToken(token);
-    req.params.tokenPayload = payload;
+    req.params.token = payload;
     next();
   } catch (error) {
     const { message } = error;

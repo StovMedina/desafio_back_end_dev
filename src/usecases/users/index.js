@@ -1,6 +1,6 @@
 const Users = require("../../models/user").model;
 const { hashPassword, confirmPassword } = require("../../lib/encrypt");
-const { checkToken } = require("../../lib/jwt");
+const { checkToken, setUpToken } = require("../../lib/jwt");
 
 const create = async (data) => {
   const { userName, password, email } = data;
@@ -36,8 +36,9 @@ const authenticate = async (email, password) => {
   const hash = user.password;
 
   const isVerified = await confirmPassword(password, hash);
+  console.log(isVerified);
   if (!isVerified) throw new Error("Wrong password");
-  return checkToken({ sub: user._id });
+  return setUpToken({ sub: user._id });
 };
 
 const delUser = async (id, userName) =>

@@ -6,8 +6,7 @@ const hashPassword = async (password) => {
 };
 
 const confirmPassword = async (password, hash) => {
-  const parallelResult = await compare(password, hash);
-  return parallelResult;
+  return await compare(password, hash);
 };
 
 module.exports = { hashPassword, confirmPassword };
