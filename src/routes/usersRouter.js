@@ -22,10 +22,10 @@ routes.get("/", authHandler, async (req, res) => {
 });
 
 routes.post("/", async (req, res) => {
-  const { userName, passwordHashed, email } = req.body;
+  const { userName, password, email } = req.body;
 
   try {
-    const payload = await user.create({ userName, passwordHashed, email });
+    const payload = await create({ userName, password, email });
     res.json({ ok: true, payload });
   } catch (error) {
     const { message } = error;
@@ -58,15 +58,15 @@ routes.put("/:id", async (req, res) => {
   }
 });
 
-routes.delete("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { userName } = await delUser(id, userName);
-    res.json({ ok: true, payload: { id, userName } });
-  } catch (error) {
-    const { message } = error;
-    res.status(400).json({ ok: false, message });
-  }
-});
+// routes.delete("/:id", async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { userName } = await delUser(id, userName);
+//     res.json({ ok: true, payload: { id, userName } });
+//   } catch (error) {
+//     const { message } = error;
+//     res.status(400).json({ ok: false, message });
+//   }
+// });
 
 module.exports = routes;
