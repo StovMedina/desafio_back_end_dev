@@ -8,6 +8,7 @@ const {
   authenticate,
   delUser,
 } = require("../usecases/users");
+const user = require("../usecases/users");
 const { authHandler } = require("../middlewares/authHandler");
 
 const routes = Router();
@@ -24,7 +25,7 @@ routes.post("/", async (req, res) => {
   const { userName, passwordHashed, email } = req.body;
 
   try {
-    const payload = await create({ userName, passwordHashed, email });
+    const payload = await user.create({ userName, passwordHashed, email });
     res.json({ ok: true, payload });
   } catch (error) {
     const { message } = error;
@@ -44,22 +45,28 @@ routes.post("/auth", async (req, res) => {
   }
 });
 
-routes.put("/", async (req, res) => {
+routes.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { userName, password, email } = req.body;
   try {
-  } catch (error) {}
-  //   res.status(405).json({ message: "Method not allowed" });
+    const data = { userName, password, email };
+    const user = await updateUser(id, data);
+    res.json({ ok: true, payload: user });
+  } catch (error) {
+    const { message } = error;
+    res.status(400).json({ ok: false, message });
+  }
 });
 
-routes.put("/:id", (req, res) => {
-  // Lógica para editar el usuario con el id X
-
-  res.json({ message: `Usuario con el id ${req.params.id} modificado` });
-});
-
-routes.delete("/:id", (req, res) => {
-  // Logica para eliminar el usuario con el id X
-
-  res.json({ message: `Usuario con el id ${req.params.id} eliminado` });
+routes.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userName } = await delUser(id, userName);
+    res.json({ ok: true, payload: { id, userName } });
+  } catch (error) {
+    const { message } = error;
+    res.status(400).json({ ok: false, message });
+  }
 });
 
 module.exports = routes;

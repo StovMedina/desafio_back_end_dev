@@ -4,7 +4,7 @@ const { checkToken } = require("../../lib/jwt");
 
 const create = async (data) => {
   const { userName, password, email } = data;
-
+  console.log (data);
   const passwordHashed = await hashPassword(password);
   const user = new Users({ userName, passwordHashed, email });
   return await user.save();
@@ -36,7 +36,7 @@ const authenticate = async (email, password) => {
   return checkToken({ sub: user._id });
 };
 
-const delUser = async (id) => await Users.findByIdAndDelete(id).exec();
+const delUser = async (id, userName) => await Users.findByIdAndDelete(id, userName).exec();
 
 module.exports = {
   create,
