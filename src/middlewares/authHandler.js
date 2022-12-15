@@ -1,4 +1,4 @@
-const { verifyToken } = require("../lib/jwt");
+const { checkToken } = require("../lib/jwt");
 
 const autHandler = async (req, res, next) => {
   const { authorization } = req.headers;
@@ -7,7 +7,7 @@ const autHandler = async (req, res, next) => {
   const token = authorization.split(" ")[1];
 
   try {
-    const payload = verifyToken(token);
+    const payload = checkToken(token);
     req.params.tokenPayload = payload;
     next();
   } catch (error) {
